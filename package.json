@@ -3,7 +3,13 @@
   "version": "3.0.0-alpha",
   "description": "お絵かき掲示板向けペイントツール",
   "private": true,
-  "exports": "./dist/axnospaint-lib.min.mjs",
+  "sideEffects": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/axnospaint-lib.min.mjs"
+    }
+  },
   "scripts": {
     "dev-server": "webpack-dev-server",
     "build": "webpack",
