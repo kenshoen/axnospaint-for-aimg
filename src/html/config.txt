@@ -482,23 +482,25 @@
             <div class="axpc_config_section" data-title="バージョン情報" id="axp_config_div_version">
                 <div class="axpc_config_group" data-title="バージョン情報">
                     <div id="axp_config_div_versionInfo"></div>
+                    © 2026- nijiurachan contributors<br>
                     © 2022 「悪の巣」部屋番号13番：「趣味の悪い大衆酒場[Mad end dance hall]」<br>
                     <br>
-                    ◆ github<br>
-                    <a href="https://github.com/axnospaint/axnospaint-lib" target="_blank" rel="noopener"
+                    ◆ GitHub<br>
+                    <a href="https://github.com/nijiurachan/axnospaint-for-aimg" target="_blank" rel="noopener"
                         style="text-decoration: none;color:#00f">
-                        https://github.com/axnospaint/axnospaint-lib</a>
+                        https://github.com/nijiurachan/axnospaint-for-aimg</a>
                     <br><br>
                     ◆ AXNOS Paint:ヘルプ - ニコニコ大百科<br>
                     <a href="https://dic.nicovideo.jp/id/5703111" target="_blank" rel="noopener"
                         style="text-decoration: none;color:#00f">
                         https://dic.nicovideo.jp/id/5703111</a>
                     <br>
+                    ※ 本バージョンはあいもげ用にカスタマイズしたものです。質問・バグ報告・要望は、ニコニコ大百科でなくGitHubまでお願いします。
                 </div>
                 <div class="axpc_config_group" data-title="デバッグ情報表示">
                     <details>
                         <summary><span style="color:#f00"><b>※不具合発生時の動作検証用です。通常時は使用しないでください。</b></span></summary>
-                        <div class="axpc_checkbox axpc_MSG" data-msg="チェックするとデバッグモードを有効になります。">
+                        <div class="axpc_checkbox axpc_MSG" data-msg="チェックするとデバッグモードが有効になります。">
                             <label>
                                 <input id="axp_config_checkbox_useDebugMode" class="axpc_SAVE"
                                     type="checkbox">デバッグ情報を表示する

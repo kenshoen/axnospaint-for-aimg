@@ -29,7 +29,7 @@ import * as extensions from '@extensions';
 export class AXPObj {
     // AXNOS Paint全体で使用する定数。（システム単位で完全に独立している定数は、システム毎に定義する）
     CONST = {
-        APP_TITLE: 'AXNOS Paint',
+        APP_TITLE: 'AXNOS Paint あいもげカスタム',
         MIN_SYSTEM_WIDTH: 8,
         MIN_SYSTEM_HEIGHT: 8,
         MAX_SYSTEM_WIDTH: 1000,
