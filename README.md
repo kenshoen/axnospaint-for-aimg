@@ -23,40 +23,38 @@ AXNOS Paint（アクノスペイント）は「お絵かき掲示板サイト」
 
 ![Sample Image](docs/pic/ss00.jpg)
 
-* [https://axnospaint.github.io/axnospaint-lib/](https://axnospaint.github.io/axnospaint-lib/)  
+* [https://axnospaint.github.io/axnospaint-lib/](https://axnospaint.github.io/axnospaint-lib/)
  こちらのページで動作確認できます。（画像の投稿はできません）
 
 ## 機能マニュアル
 
-* [https://dic.nicovideo.jp/id/5703111](https://dic.nicovideo.jp/id/5703111)  
+* [https://dic.nicovideo.jp/id/5703111](https://dic.nicovideo.jp/id/5703111)
 AXNOS Paint:ヘルプ - ニコニコ大百科（外部サイト）
 
 ## 使用ライブラリ
 
-* reinvented-color-wheel(WTFPL License)  [https://github.com/luncheon/reinvented-color-wheel](https://github.com/luncheon/reinvented-color-wheel)  
+* reinvented-color-wheel(WTFPL License)  [https://github.com/luncheon/reinvented-color-wheel](https://github.com/luncheon/reinvented-color-wheel)
  カラーピッカー（改変して使用）
 
-* webpack5(MIT License)  [https://github.com/webpack/webpack](https://github.com/webpack/webpack)  
- ビルド用  
+* webpack5(MIT License)  [https://github.com/webpack/webpack](https://github.com/webpack/webpack)
+ ビルド用
 
 ## 導入
 
 ### ファイル構成
-[Releases](https://github.com/axnospaint/axnospaint-lib/)から最新版をダウンロードし、`/dist/`内の以下のファイルをサーバーに配置してください。
+[Releases](https://github.com/nijiurachan/axnospaint-lib/)から最新版をダウンロードし、`/dist/`内の以下のファイルをサーバーに配置してください。
 ```
 index.html（起動用htmlファイル）
-axnospaint-lib-2.x.x.min.js（ビルド済jsファイル。バージョンによってxの数値は変動します）
+axnospaint-lib.min.mjs（ビルド済jsファイル。バージョンによってxの数値は変動します）
 ```
 ### 起動用htmlファイル
 最小構成の例を以下に示します。提供するサービスに合わせて後述のオプションを指定してください。
 ```html
 <head>
-    <script defer="defer" src="axnospaint-lib-2.x.x.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            new AXNOSPaint({
-                bodyId: 'axnospaint_body',
-            });
+    <script type="module">
+        import AXNOSPaint from './axnospaint-lib.min.mjs';
+        new AXNOSPaint({
+            bodyId: 'axnospaint_body',
         });
     </script>
 </head>
@@ -362,40 +360,40 @@ AXNOS Paintを展開するdiv要素の前または後（あるいは両方）に
 
 ### ビルド
 
-webpack5を使用し、.pngファイルや.cssファイルを含めた全ファイルを１つの.jsファイルにバンドルします。  
+webpack5を使用し、.pngファイルや.cssファイルを含めた全ファイルを１つの.jsファイルにバンドルします。
 
- webpack.config.js ： 開発用webpack設定ファイル。.jsファイル出力用。  
- webpack.prod.js ： プロダクションビルド用webpack設定ファイル。コメントなどを削除したmin.jsファイル出力用。
-  
+ webpack.config.js ： 開発用webpack設定ファイル。.jsファイル出力用。
+ webpack.prod.js ： プロダクションビルド用webpack設定ファイル。コメントなどを削除したmin.mjsファイル出力用。
+
 #### プロダクションビルド
 
 通常版とWebデモ版が存在します。
-  
+
 通常版プロダクションビルド
 ```
  npm run prod
 ```
 * ファイルの出力先は`/dist`
-* ファイル名は`index.html`,`axnospaint-lib-2.x.x.min.js`（バージョン番号はpackage.jsonに依存します）
+* ファイル名は`index.html`,`axnospaint-lib.min.mjs`
 
 Webデモ版プロダクションビルド
 ```
  npm run prod-demo
 ```
 * ファイルの出力先は`/docs/latest`
-* ファイル名は`index.html`,`axnospaint-lib-demo-2.x.x.min.js`（バージョン番号はpackage.jsonに依存します）
+* ファイル名は`index.html`,`axnospaint-lib-demo.min.mjs`
 * Webデモ版にはマスコット機能が追加されます。
 
 ### マスコット機能
 
-マスコットキャラがペイントツールの機能について紹介を行う機能が追加されます。  
-拡張機能として./extensions/mascot/の中にデータが配置されています。Webデモ版のビルドを行った場合、.jsファイルにデータが取り込まれ機能が有効になります。
+マスコットキャラがペイントツールの機能について紹介を行う機能が追加されます。
+拡張機能として./extensions/mascot/の中にデータが配置されています。Webデモ版のビルドを行った場合、.mjsファイルにデータが取り込まれ機能が有効になります。
 
 
 ### データ保存
 
 AXNOS PaintはブラウザのindexedDB領域（DB名：`axnospaint_db1`）を使用して、画像のセーブロード、自動バックアップ、ユーザー設定情報の保存を行います。
-indexedDBが使用できない環境の場合、起動時に警告が表示され、関連する機能が動作しなくなります。また、プライベートブラウジングモードでの使用は、ブラウザを閉じたときにindexedDBが消去されるため、データ保存ができません。  
+indexedDBが使用できない環境の場合、起動時に警告が表示され、関連する機能が動作しなくなります。また、プライベートブラウジングモードでの使用は、ブラウザを閉じたときにindexedDBが消去されるため、データ保存ができません。
 localStorage、Cookieは使用していません。
 
 ### 初回起動時の特別処理
@@ -403,7 +401,7 @@ localStorage、Cookieは使用していません。
 初回起動（indexedDBのデータが存在しない状態）の時、以下の処理を行います。２回目以降は実施されません。
 
 * indexedDB（DB名：`axnospaint_db1`）を作成します。
-* window.screen.widthを参照して画面幅が600px未満のデバイスの場合、単一スクリーンモード(※)を自動的に設定します。  
+* window.screen.widthを参照して画面幅が600px未満のデバイスの場合、単一スクリーンモード(※)を自動的に設定します。
 
 ※：表示ウィンドウのボタンから各ウィンドウを開く際に、既に開いている他のウィンドウが自動的に閉じるようになるモード。[設定]-[ツールウィンドウ]で変更可能。
 
