@@ -56,22 +56,21 @@ module.exports = {
     entry: "./src/index.js",
     // 出力ファイル
     output: {
-        filename: 'axnospaint.js',
+        filename: 'axnospaint.mjs',
         library: {
-            name: 'AXNOSPaint',
-            export: 'default',
-            type: 'umd',
+            type: 'module',
         },
+    },
+    experiments: {
+        outputModule: true,
     },
     plugins: [
         // プラグインのインスタンスを作成
         new HtmlWebpackPlugin({
             // テンプレート
             template: "./src/index.html",
-            // <script> ~ </script> タグの挿入位置
-            inject: "body",
-            // スクリプト読み込みのタイプ
-            scriptLoading: "defer",
+            // <script> ~ </script> タグは不要
+            inject: false,
             // ファビコンも <link rel="shortcut icon" ~ /> として挿入できる
             //favicon: "./src/favicon.ico",
         }),
@@ -81,7 +80,7 @@ module.exports = {
         }),
         // ビルドファイルの先頭にコメントを挿入
         new webpack.BannerPlugin(
-            `AXNOS Paint version ${version} (${buildDate})\n(c) 2022「悪の巣」部屋番号13番：「趣味の悪い大衆酒場[Mad end dance hall]」\nLicensed under MPL 2.0`,
+            `AXNOS Paint w/ nijiurachan custom version ${version} (${buildDate})\n(c) 2026- nijiurachan contributors\n(c) 2022「悪の巣」部屋番号13番：「趣味の悪い大衆酒場[Mad end dance hall]」\nLicensed under MPL 2.0`,
             {
                 raw: false,
                 entryOnly: true

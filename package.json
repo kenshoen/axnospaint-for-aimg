@@ -1,7 +1,15 @@
 {
-  "name": "axnospaint",
-  "version": "2.4.0",
+  "name": "axnospaint-for-aimg",
+  "version": "3.0.0-alpha",
   "description": "お絵かき掲示板向けペイントツール",
+  "private": true,
+  "sideEffects": true,
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/axnospaint-lib.min.mjs"
+    }
+  },
   "scripts": {
     "dev-server": "webpack-dev-server",
     "build": "webpack",
@@ -10,7 +18,7 @@
     "eslint": "eslint src/**/*.js",
     "audit": "npm audit"
   },
-  "author": "axnospaint",
+  "author": "axnospaint authors and nijiurachan contributors",
   "license": "MPL-2.0",
   "devDependencies": {
     "@eslint/js": "^9.16.0",

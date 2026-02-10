@@ -1,7 +1,8 @@
-# AXNOS Paint
+# AXNOS Paint あいもげカスタム
 
-* 2024/12/8 [version 2.4.0 (2024-12-07T13:07:39.162Z)](https://github.com/axnospaint/axnospaint-lib/releases/tag/v2.4.0)を公開しました。  
-* 更新履歴は[Releases](https://github.com/axnospaint/axnospaint-lib/releases)をご覧ください。
+* 2026/2/6 あいもげ画像掲示板用にカスタマイズするため、フォークして v3 としました。本フォークの要望やバグについては、オリジナル版のリポジトリでなく [本リポジトリ](https://github.com/nijiurachan/axnospaint-for-aimg/) のイシューをご利用ください。
+
+<details><summary>オリジナルREADME.md</summary>
 
 ## 概要
 AXNOS Paint（アクノスペイント）は「お絵かき掲示板サイト」での利用を想定したペイントツールです。画像掲示板サービス運営者向けに設計しておりますが、ローカル環境で使用することも可能です。
@@ -23,40 +24,38 @@ AXNOS Paint（アクノスペイント）は「お絵かき掲示板サイト」
 
 ![Sample Image](docs/pic/ss00.jpg)
 
-* [https://axnospaint.github.io/axnospaint-lib/](https://axnospaint.github.io/axnospaint-lib/)  
+* https://nijiurachan.github.io/axnospaint-for-aimg/
  こちらのページで動作確認できます。（画像の投稿はできません）
 
 ## 機能マニュアル
 
-* [https://dic.nicovideo.jp/id/5703111](https://dic.nicovideo.jp/id/5703111)  
+* https://dic.nicovideo.jp/id/5703111
 AXNOS Paint:ヘルプ - ニコニコ大百科（外部サイト）
 
 ## 使用ライブラリ
 
-* reinvented-color-wheel(WTFPL License)  [https://github.com/luncheon/reinvented-color-wheel](https://github.com/luncheon/reinvented-color-wheel)  
+* [reinvented-color-wheel(WTFPL License)](https://github.com/luncheon/reinvented-color-wheel)
  カラーピッカー（改変して使用）
 
-* webpack5(MIT License)  [https://github.com/webpack/webpack](https://github.com/webpack/webpack)  
- ビルド用  
+* [webpack5(MIT License)](https://github.com/webpack/webpack)
+ ビルド用
 
 ## 導入
 
 ### ファイル構成
-[Releases](https://github.com/axnospaint/axnospaint-lib/)から最新版をダウンロードし、`/dist/`内の以下のファイルをサーバーに配置してください。
+[Releases](https://github.com/nijiurachan/axnospaint-for-aimg/releases)から最新版をダウンロードし、`/dist/`内の以下のファイルをサーバーに配置してください。
 ```
 index.html（起動用htmlファイル）
-axnospaint-lib-2.x.x.min.js（ビルド済jsファイル。バージョンによってxの数値は変動します）
+axnospaint-lib.min.mjs（ビルド済mjsファイル）
 ```
 ### 起動用htmlファイル
 最小構成の例を以下に示します。提供するサービスに合わせて後述のオプションを指定してください。
 ```html
 <head>
-    <script defer="defer" src="axnospaint-lib-2.x.x.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            new AXNOSPaint({
-                bodyId: 'axnospaint_body',
-            });
+    <script type="module">
+        import AXNOSPaint from './axnospaint-lib.min.mjs';
+        new AXNOSPaint({
+            bodyId: 'axnospaint_body',
         });
     </script>
 </head>
@@ -106,7 +105,7 @@ AXNOS Paintは起動時に以下のURLパラメータを受け取ります。
 
 例）キャンバスサイズ横600、縦400でAXNOS Paintを起動
 ```
-https://www.axnospaint.jp/index.html?oekaki_width=600&oekaki_height=400
+https://www.axnospaint.example.jp/index.html?oekaki_width=600&oekaki_height=400
 ```
 
 ### 下書き機能
@@ -114,29 +113,29 @@ https://www.axnospaint.jp/index.html?oekaki_width=600&oekaki_height=400
 ツール起動時に指定の画像を下書きとして読み込み、初期レイヤーにする機能です。
 ２通りの指定方法があり、どちらか一方を選択して使用することができます。（※同時に指定した場合、2.が優先されます）
 
-1. URLパラメータ指定(PNG形式専用)  
-   起動オプション`oekakiURL`に、画像が配置されているURLパス名を指定する。  
+1. URLパラメータ指定(PNG形式専用)
+   起動オプション`oekakiURL`に、画像が配置されているURLパス名を指定する。
    起動オプションに`oekakiURL`を**指定しなかった場合、URLパラメータ指定による読み込み機能は無効になります。**
    ```js
     new AXNOSPaint({
         // 中略
-        oekakiURL: 'https://www.axnospaint.jp/oekaki/',
+        oekakiURL: 'https://www.axnospaint.example.jp/oekaki/',
     });
-   ```   
+   ```
    URLパラメータ`oekaki_id`に画像ファイル名（拡張子を除く）を指定して起動する。
    ```
-   https://www.axnospaint.jp/index.html?oekaki_id=12345
+   https://www.axnospaint.example.jp/index.html?oekaki_id=12345
    ```
-   この時、起動オプション`oekakiURL`で指定されているパスを参照し、`https://www.axnospaint.jp/oekaki/12345.png`を読み込みます。
+   この時、起動オプション`oekakiURL`で指定されているパスを参照し、`https://www.axnospaint.example.jp/oekaki/12345.png`を読み込みます。
 
-2. 起動オプション指定  
+2. 起動オプション指定
    起動オプション`draftImageFile`に、画像ファイルを指定する。
    ```js
     new AXNOSPaint({
         // 中略
-        draftImageFile: 'https://www.axnospaint.jp/oekaki/12345.jpg',
+        draftImageFile: 'https://www.axnospaint.example.jp/oekaki/12345.jpg',
     });
-   ```   
+   ```
    この方式では、PNG形式以外のファイルも読み込み可能ですが、ツールが出力する画像はPNG形式に変換されます。
 
 下書き機能を使用し、画像の読み込みに成功した場合、以下のルールが適用されます。
@@ -152,8 +151,8 @@ https://www.axnospaint.jp/index.html?oekaki_width=600&oekaki_height=400
 
 #### 下書き機能使用時の同一掲示板チェック
 
-下書き機能を利用して、一度投稿された画像を（別の投稿者が）他の掲示板へ転載したり、新規と偽って投稿する行為を予防（※完全ではありません）する仕組みです。  
-起動オプションの`checkSameBBS`にtrue（有効）を指定した場合、適用される機能です。  
+下書き機能を利用して、一度投稿された画像を（別の投稿者が）他の掲示板へ転載したり、新規と偽って投稿する行為を予防（※完全ではありません）する仕組みです。
+起動オプションの`checkSameBBS`にtrue（有効）を指定した場合、適用される機能です。
 ```js
 new AXNOSPaint({
     // 中略
@@ -161,7 +160,7 @@ new AXNOSPaint({
 });
 ```
 
-  
+
 AXNOS Paintでは下書き機能を使用した際に、以下の情報を記憶します。
 1. URLパス名（`url.pathname`）
 2. 読み込み画像ファイル情報（`oekaki_id`または`draftImageFile`）
@@ -170,13 +169,13 @@ AXNOS Paintでは下書き機能を使用した際に、以下の情報を記憶
 AXNOS Paintで自動保存からの復元またはロード機能を使用する際、URLパス名が一致しない（＝下書き画像が投稿された掲示板とは違う掲示板でロードを行った）場合に、ロードをキャンセルし、同一の掲示板でロードしてもらうことを促すメッセージを表示します。（この時、3.の&lt;title&gt;要素の文字列をメッセージの文言に使用します。この理由から、起動ページの&lt;title&gt;要素には、予め掲示板を一意に特定できるタイトルを指定しておくことが望ましいです）
 
 
-このルールは下書きを使用しない画像の投稿には適用していません。これは投稿者自身であれば、投稿済みのセーブデータをロードすることで、自由に掲示板を再選択して何度でも再投稿できることを意味します。  
-仮にここに制限をかけてしまうと「〇〇の掲示板に投稿するつもりだったのに、うっかり△△の掲示板で描き始めてしまった」「〇〇の掲示板で描いている途中に掲示板が削除／閉鎖されてしまった」といったケースで問題が発生することになり、ユーザーの不利益になることが予想されるためです。  
+このルールは下書きを使用しない画像の投稿には適用していません。これは投稿者自身であれば、投稿済みのセーブデータをロードすることで、自由に掲示板を再選択して何度でも再投稿できることを意味します。
+仮にここに制限をかけてしまうと「〇〇の掲示板に投稿するつもりだったのに、うっかり△△の掲示板で描き始めてしまった」「〇〇の掲示板で描いている途中に掲示板が削除／閉鎖されてしまった」といったケースで問題が発生することになり、ユーザーの不利益になることが予想されるためです。
 投稿者自身による多重投稿については、セーブデータや自動バックアップデータが既に投稿されたものであるかの判定が現実的に困難であり、障害発生で画像が消失してしまうリスクがあるため、こちらについてはAXNOS Paintでは制限を設けず、サービス管理者に対処を一任するものとします。
-  
+
 
 ### 投稿機能
-AXNOS Paint上でユーザーが投稿操作を行ったとき、起動オプションの`post`に指定された関数を呼び出します。この関数内にサーバーとの通信処理を記述することで、サーバー側に投稿情報を渡すことができます。  
+AXNOS Paint上でユーザーが投稿操作を行ったとき、起動オプションの`post`に指定された関数を呼び出します。この関数内にサーバーとの通信処理を記述することで、サーバー側に投稿情報を渡すことができます。
 この時ツール側は、投稿ボタン連打による二重送信を防ぐために、`await`で`Promise`の処理結果を待機します。通信処理が完了したタイミングで、`resolve()`で待機状態を終了させてください。投稿処理内でエラーが発生した場合は、`alert`関数（標準関数をAXNOS Paintによってオーバーライド済）によってユーザーに対して情報を通知することができます。この場合も`resolve()`で待機状態を終了させてください。待機状態を終了しない場合、投稿ボタンは通信中のまま、再度押すことができなくなります。
 ```js
 new AXNOSPaint({
@@ -209,9 +208,9 @@ AXNOS Paintはサーバーとのインターフェースとして、以下のメ
 |  draftImageFile  | 下書き機能(2)を使用した場合に付与される情報。未使用時はNULL。（起動オプションで指定した`draftImageFile`の内容の転記。**ただし、AXNOSPaint使用中の操作で更新される場合があります。** |
 |  strEncodeImg  |  投稿するpng画像のdata URI<br>toDataURL('image/png')でエンコードした後、replace('data:image/png;base64,', '')でヘッダ部分を削除したもの。<br>AXNOS Paint側の設定により、背景透過pngとなる場合もある。  |
 
-【重要】  
-AXNOS Paintは、キャンバスサイズの変更機能、画像のセーブ／ロード機能をもつ関係上、起動時に指定したURLパラメータと実際に投稿される画像の情報が一致しない場合が発生します。  
-（例：317×317の画像ファイルを下描きとして描き始めたが、途中で既にセーブしてあったキャンバスサイズ400×400の別の画像データをロードして投稿した等）  
+【重要】
+AXNOS Paintは、キャンバスサイズの変更機能、画像のセーブ／ロード機能をもつ関係上、起動時に指定したURLパラメータと実際に投稿される画像の情報が一致しない場合が発生します。
+（例：317×317の画像ファイルを下描きとして描き始めたが、途中で既にセーブしてあったキャンバスサイズ400×400の別の画像データをロードして投稿した等）
 そのため、投稿処理の中ではAXNOS Paintが受け渡す投稿情報オブジェクトを参照することを前提とし、**以下の操作は想定外の動作を引き起こす原因となるため絶対に行わないでください。**
 
 * ❌投稿処理内でURLパラメータの値を参照する
@@ -220,7 +219,7 @@ AXNOS Paintは、キャンバスサイズの変更機能、画像のセーブ／
 
 #### 投稿用フォームのカスタマイズ
 
-起動オプションの`postForm`で、投稿用フォームの表示／非表示、入力必須の有無、最大文字数、プレースホルダーのカスタマイズが可能です。  
+起動オプションの`postForm`で、投稿用フォームの表示／非表示、入力必須の有無、最大文字数、プレースホルダーのカスタマイズが可能です。
 以下に設定例を示します。
 
 ```js
@@ -229,37 +228,37 @@ new AXNOSPaint({
     postForm: {
         // 投稿フォーム
         input: {
-            isDisplay: true, 
+            isDisplay: true,
             // 投稿者名
             strName: {
-                isDisplay: true, 
+                isDisplay: true,
                 isInputRequired: false,
                 maxLength: 32,
                 placeholder: 'ななしのよっしん',
             },
             // タイトル
             strTitle: {
-                isDisplay: true, 
+                isDisplay: true,
                 isInputRequired: false,
                 maxLength: 32,
                 placeholder: '',
             },
             // 本文
             strMessage: {
-                isDisplay: true, 
+                isDisplay: true,
                 isInputRequired: true,
                 maxLength: 1024,
                 placeholder: '本文を入力してください。',
             },
             // ウォッチリスト登録
             strWatchList: {
-                isDisplay: true, 
+                isDisplay: true,
             },
         },
         // 注意事項
         notice: {
             isDisplay: true,
-            // 文章はユーザー辞書を使用して書き換えが可能 
+            // 文章はユーザー辞書を使用して書き換えが可能
         },
     },
 });
@@ -283,7 +282,7 @@ new AXNOSPaint({
 
 AXNOS Paintに、ユーザー独自のタブを１つ追加する機能です。「リンク表示」「関数呼び出し」の２通りの使用方法があります。
 
-1. リンク表示（推奨）  
+1. リンク表示（推奨）
 `name`で指定された名前のタブを追加し、クリックすると別タブで`link`で指定されたURLのページを開きます。また、タブにポインタを重ねた時、`msg`で指定されたガイドメッセージを左下に表示します。
 ```js
 new AXNOSPaint({
@@ -296,8 +295,8 @@ new AXNOSPaint({
 });
 ```
 
-2. 関数呼び出し  
-`name`で指定された名前のタブを追加し、クリックすると`function`で指定された関数を呼び出します。また、タブにポインタを重ねた時、`msg`で指定されたガイドメッセージを左下に表示します。  
+2. 関数呼び出し
+`name`で指定された名前のタブを追加し、クリックすると`function`で指定された関数を呼び出します。また、タブにポインタを重ねた時、`msg`で指定されたガイドメッセージを左下に表示します。
 AXNOS Paintのページ内でユーザー独自の処理を行う必要がある場合に使用します。
 ```js
 new AXNOSPaint({
@@ -317,7 +316,7 @@ AXNOS Paintが表示している一部の単語を、ユーザーが指定した
 * 提供するサービスに合わせて、ボタンのラベルや注意事項などを、より適切なメッセージに変更することできます。
 * 多言語対応としても利用できます。（データはユーザーが用意する必要があります）
 * 特定の単語のみ置換可能で、設定画面や各種メッセージ等には対応していません。
-* 辞書ファイルのサンプルと作成方法は[こちら](https://github.com/axnospaint/axnospaint-lib-dictionary)（動作無保証）
+* 辞書ファイルのサンプルと作成方法は[こちら](https://github.com/nijiurachan/axnospaint-lib-dictionary)（動作無保証）
 
 辞書ファイルをサーバーに配置し、起動オプション`dictionary`にファイルパスを指定する。
 ```js
@@ -362,40 +361,40 @@ AXNOS Paintを展開するdiv要素の前または後（あるいは両方）に
 
 ### ビルド
 
-webpack5を使用し、.pngファイルや.cssファイルを含めた全ファイルを１つの.jsファイルにバンドルします。  
+webpack5を使用し、.pngファイルや.cssファイルを含めた全ファイルを１つの.mjsファイルにバンドルします。
 
- webpack.config.js ： 開発用webpack設定ファイル。.jsファイル出力用。  
- webpack.prod.js ： プロダクションビルド用webpack設定ファイル。コメントなどを削除したmin.jsファイル出力用。
-  
+ webpack.config.js ： 開発用webpack設定ファイル。.jsファイル出力用。
+ webpack.prod.js ： プロダクションビルド用webpack設定ファイル。コメントなどを削除したmin.mjsファイル出力用。
+
 #### プロダクションビルド
 
 通常版とWebデモ版が存在します。
-  
+
 通常版プロダクションビルド
 ```
  npm run prod
 ```
 * ファイルの出力先は`/dist`
-* ファイル名は`index.html`,`axnospaint-lib-2.x.x.min.js`（バージョン番号はpackage.jsonに依存します）
+* ファイル名は`index.html`,`axnospaint-lib.min.mjs`
 
 Webデモ版プロダクションビルド
 ```
  npm run prod-demo
 ```
 * ファイルの出力先は`/docs/latest`
-* ファイル名は`index.html`,`axnospaint-lib-demo-2.x.x.min.js`（バージョン番号はpackage.jsonに依存します）
+* ファイル名は`index.html`,`axnospaint-lib-demo.min.mjs`
 * Webデモ版にはマスコット機能が追加されます。
 
 ### マスコット機能
 
-マスコットキャラがペイントツールの機能について紹介を行う機能が追加されます。  
-拡張機能として./extensions/mascot/の中にデータが配置されています。Webデモ版のビルドを行った場合、.jsファイルにデータが取り込まれ機能が有効になります。
+マスコットキャラがペイントツールの機能について紹介を行う機能が追加されます。
+拡張機能として./extensions/mascot/の中にデータが配置されています。Webデモ版のビルドを行った場合、.mjsファイルにデータが取り込まれ機能が有効になります。
 
 
 ### データ保存
 
 AXNOS PaintはブラウザのindexedDB領域（DB名：`axnospaint_db1`）を使用して、画像のセーブロード、自動バックアップ、ユーザー設定情報の保存を行います。
-indexedDBが使用できない環境の場合、起動時に警告が表示され、関連する機能が動作しなくなります。また、プライベートブラウジングモードでの使用は、ブラウザを閉じたときにindexedDBが消去されるため、データ保存ができません。  
+indexedDBが使用できない環境の場合、起動時に警告が表示され、関連する機能が動作しなくなります。また、プライベートブラウジングモードでの使用は、ブラウザを閉じたときにindexedDBが消去されるため、データ保存ができません。
 localStorage、Cookieは使用していません。
 
 ### 初回起動時の特別処理
@@ -403,7 +402,7 @@ localStorage、Cookieは使用していません。
 初回起動（indexedDBのデータが存在しない状態）の時、以下の処理を行います。２回目以降は実施されません。
 
 * indexedDB（DB名：`axnospaint_db1`）を作成します。
-* window.screen.widthを参照して画面幅が600px未満のデバイスの場合、単一スクリーンモード(※)を自動的に設定します。  
+* window.screen.widthを参照して画面幅が600px未満のデバイスの場合、単一スクリーンモード(※)を自動的に設定します。
 
 ※：表示ウィンドウのボタンから各ウィンドウを開く際に、既に開いている他のウィンドウが自動的に閉じるようになるモード。[設定]-[ツールウィンドウ]で変更可能。
 
@@ -430,7 +429,7 @@ localStorage、Cookieは使用していません。
 |config     | 設定タブ内のコンテンツ |
 |post       | 投稿タブ内のコンテンツ |
 |footer     | フッター領域 |
-   
+
 ### id名
 
 AXNOS Paintでは、先頭にaxp_を付与したid名を使用します。
@@ -440,8 +439,8 @@ AXNOS Paintでは、先頭にaxp_を付与したid名を使用します。
 axp_所属名
 axp_所属名_要素名_任意の識別名
 ```
-例：axp_pen（ペンツールウィンドウ）  
-例：axp_pen_form_penSize（ペンツールウィンドウ内の&lt;form&gt;要素、ペンの太さ調整用）  
+例：axp_pen（ペンツールウィンドウ）
+例：axp_pen_form_penSize（ペンツールウィンドウ内の&lt;form&gt;要素、ペンの太さ調整用）
 例：axp_layer_button_create（レイヤーウィンドウ内の&lt;button&gt;要素、新規ボタン）
 
 * 「axp_所属名」のidをもつ要素は、その所属の親divを意味するものとします。
@@ -488,7 +487,12 @@ axpc_所属名_任意の識別名
 | 6000    | ハンバーガーメニュー |
 | 10000   | アラート（`alert()`で表示されるポップアップ） |
 
+</details>
+
 ## Copyright / License
 
-(c) 2022 「悪の巣」部屋番号13番：「趣味の悪い大衆酒場[Mad end dance hall]」  
+(c) 2026 nijiurachan contributors
+
+(c) 2022 「悪の巣」部屋番号13番：「趣味の悪い大衆酒場[Mad end dance hall]」
+
 Licensed under MPL 2.0
