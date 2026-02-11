@@ -7,6 +7,10 @@
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",
+      "import": "./src/index.js"
+    },
+    "./dist": {
+      "types": "./dist/index.d.ts",
       "import": "./dist/axnospaint-lib.min.mjs"
     }
   },
