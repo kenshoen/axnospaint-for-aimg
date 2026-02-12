@@ -10,6 +10,9 @@
       "import": "./dist/axnospaint-lib.min.mjs"
     }
   },
+  "files": [
+    "./dist/axnospaint-lib.min.mjs.map"
+  ],
   "scripts": {
     "dev-server": "webpack-dev-server",
     "build": "webpack",
